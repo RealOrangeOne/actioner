@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "655537d96ce2a47a7ef792ca2e0142c6ac9171fe41bffceea65fef4ca070f473"
+            "sha256": "6cf7c4ad05c16172e008a56fff46fe8374eaa923700a8423ba87c770b455a269"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -184,6 +184,13 @@
                 "sha256:d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"
             ],
             "version": "==1.12.0"
+        },
+        "todoist-python": {
+            "hashes": [
+                "sha256:f2d8ee63d0ceabdf548bd0b127e7cd3d9dc42759282033796225c251a2153dcb"
+            ],
+            "index": "pypi",
+            "version": "==7.0.19"
         },
         "typing-extensions": {
             "hashes": [
