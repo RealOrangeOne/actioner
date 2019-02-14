@@ -9,3 +9,6 @@ verify_ssl = true
 
 [requires]
 python_version = "3.5"
+
+[scripts]
+start = "python3 actioner/__main__.py"
