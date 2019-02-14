@@ -14,6 +14,7 @@ def main():
     server = get_server()
     scheduler = create_scheduler()
 
+    # HACK: APScheduler doesn't like running in an external event loop. https://github.com/agronholm/apscheduler/issues/360
     Process(target=run_web_app, args=(server,)).start()
     Process(target=start_scheduler, args=(scheduler,)).start()
 
