@@ -22,3 +22,5 @@ allow_prereleases = true
 [packages]
 aiohttp = "*"
 apscheduler = "*"
+pygithub = "*"
+python-dotenv = "*"
