@@ -9,7 +9,6 @@ def main():
     server = get_server()
     web_process = Process(target=run_web_app, args=(server,))
     web_process.start()
-    web_process.join()
 
 
 if __name__ == '__main__':
