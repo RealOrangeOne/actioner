@@ -4,11 +4,17 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-
-[packages]
+flake8 = "*"
+mypy = "*"
+isort = "*"
 
 [requires]
 python_version = "3.5"
 
 [scripts]
 start = "python3 actioner/__main__.py"
+test-fix = "bash ./scripts/test-fix.sh"
+test = "bash ./scripts/test.sh"
+
+[pipenv]
+allow_prereleases = true
