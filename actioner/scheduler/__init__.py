@@ -1,5 +1,6 @@
-from apscheduler.schedulers.blocking import BlockingScheduler
 import asyncio
+
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def create_scheduler():
