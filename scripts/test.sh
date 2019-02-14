@@ -6,7 +6,7 @@ echo "> Running isort"
 isort -rc -c actioner/
 
 echo "> Running mypy"
-mypy --ignore-missing-imports actioner/
+mypy actioner/
 
 echo "> Running flake8"
-flake8 --extend-ignore=E128,E501 actioner
+flake8 actioner
