@@ -23,6 +23,5 @@ allow_prereleases = true
 aiohttp = "*"
 apscheduler = "*"
 pygithub = "*"
-python-dotenv = "*"
 aiohttp-basicauth = "*"
 todoist-python = "*"
