@@ -12,9 +12,12 @@ isort = "*"
 python_version = "3.5"
 
 [scripts]
-start = "python3 actioner/main.py"
+start = "python3 -m actioner"
 test-fix = "bash ./scripts/test-fix.sh"
 test = "bash ./scripts/test.sh"
 
 [pipenv]
 allow_prereleases = true
+
+[packages]
+aiohttp = "*"
