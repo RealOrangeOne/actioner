@@ -24,7 +24,7 @@ def issue_to_task_name(issue: Issue) -> str:
 def get_existing_task(tasks: Dict[int, str], issue: Issue):
     issue_link = get_issue_link(issue)
     for task_id, task_title in tasks.items():
-        if issue_link in task_title:
+        if task_title.startswith(issue_link):
             return task_id
     return None
 

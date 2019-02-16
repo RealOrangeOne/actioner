@@ -2,4 +2,4 @@
 
 set -e
 
-isort -rc actioner/
+isort -rc actioner/ tests/

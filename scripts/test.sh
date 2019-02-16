@@ -2,11 +2,14 @@
 
 set -e
 
+echo "> Running tests..."
+nose2 $@ -C --coverage actioner --verbose --coverage-report term --coverage-report html
+
 echo "> Running isort"
-isort -rc -c actioner/
+isort -rc -c actioner/ tests/
 
 echo "> Running mypy"
-mypy actioner/
+mypy actioner/ tests/
 
 echo "> Running flake8"
-flake8 actioner
+flake8 actioner tests
