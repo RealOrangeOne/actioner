@@ -8,6 +8,10 @@ flake8 = "*"
 mypy = "*"
 isort = "*"
 nose2 = "*"
+flake8-comprehensions = "*"
+flake8-mutable = "*"
+flake8-print = "*"
+flake8-tuple = "*"
 
 [requires]
 python_version = "3.5"
