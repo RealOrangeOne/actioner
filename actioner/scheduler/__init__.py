@@ -1,10 +1,13 @@
 import asyncio
 
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+from .todoist_assigned_issues import todoist_assigned_issues
 
 
 def create_scheduler():
-    scheduler = BlockingScheduler()
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(todoist_assigned_issues, 'interval', minutes=15)
     return scheduler
 
 
