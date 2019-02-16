@@ -1,10 +1,12 @@
 from collections import namedtuple
 
 from actioner.clients import github, todoist
-from actioner.scheduler.todoist_assigned_issues import (REPOS,
-                                                        get_existing_task,
-                                                        get_issue_link,
-                                                        issue_to_task_name)
+from actioner.scheduler.todoist_assigned_issues import (
+    REPOS,
+    get_existing_task,
+    get_issue_link,
+    issue_to_task_name,
+)
 from tests import BaseTestCase
 
 FakeIssue = namedtuple('FakeIssue', ['number', 'html_url', 'title'])
