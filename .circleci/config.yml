@@ -4,6 +4,8 @@ jobs:
     build:
         docker:
             - image: circleci/python:3.5
+        environment:
+            BASIC_AUTH: "username:password"
         steps:
             - checkout
             - restore_cache:
