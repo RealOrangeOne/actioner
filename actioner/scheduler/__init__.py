@@ -7,7 +7,7 @@ from .todoist_assigned_issues import todoist_assigned_issues
 
 def create_scheduler():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(todoist_assigned_issues, 'interval', minutes=15)
+    scheduler.add_job(todoist_assigned_issues)
     return scheduler
 
 

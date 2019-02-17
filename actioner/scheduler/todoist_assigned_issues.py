@@ -1,3 +1,4 @@
+import re
 from typing import Dict
 
 from github import Issue
@@ -14,6 +15,8 @@ LABEL_TO_STATUS = {
     'critical': 4,
     'should have': 2
 }
+
+ISSUE_NUMBER_RE = re.compile(r"\[#(\d+?)\]")
 
 
 def get_status_for_issue(issue: Issue) -> int:
@@ -69,5 +72,14 @@ def todoist_assigned_issues():
             existing_task_id = get_existing_task(existing_tasks, issue)
             if existing_task_id is not None:
                 todoist.items.complete([existing_task_id])
+
+        for existing_task_id, existing_task_content in existing_tasks.items():
+            if repo.html_url not in existing_task_content:
+                continue
+            issue_number = ISSUE_NUMBER_RE.match(existing_task_content).group(1)
+            issue = repo.get_issue(int(issue_number))
+            assignees = {assignee.login for assignee in issue.assignees}
+            if me.login not in assignees:
+                todoist.items.delete([existing_task_id])
 
     todoist.commit()
