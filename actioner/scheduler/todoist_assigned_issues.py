@@ -9,6 +9,20 @@ REPOS = {
     'srobo/core-team-minutes': 2190856871
 }
 
+LABEL_TO_STATUS = {
+    'must have': 4,
+    'critical': 4,
+    'should have': 2
+}
+
+
+def get_status_for_issue(issue: Issue) -> int:
+    priorities = {
+        LABEL_TO_STATUS.get(label.name.lower(), 1)
+        for label in issue.labels
+    }
+    return max(priorities, default=1)
+
 
 def get_issue_link(issue: Issue) -> str:
     return "[#{id}]({url})".format(
@@ -45,7 +59,8 @@ def todoist_assigned_issues():
                 )['id']
             existing_task = todoist.items.get_by_id(existing_task_id)
             existing_task.update(
-                content=issue_to_task_name(issue)
+                content=issue_to_task_name(issue),
+                priority=get_status_for_issue(issue)
             )
             if issue.milestone and issue.milestone.due_on:
                 existing_task.update(date_string=issue.milestone.due_on.strftime("%d/%m/%Y"))
