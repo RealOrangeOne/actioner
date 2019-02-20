@@ -49,7 +49,7 @@ def todoist_assigned_issues():
                 todoist.items.delete([existing_task_id])
                 continue
 
-            elif issue.state == 'closed' and existing_task_id is not None:
+            elif issue.state == 'closed' and existing_task_id is not None and not todoist.items.get_by_id(existing_task_id)['checked']:
                 logger.info("Completing task for '{}'".format(issue.title))
                 todoist.items.complete([existing_task_id])
                 continue
@@ -62,6 +62,11 @@ def todoist_assigned_issues():
                         project_id
                     )['id']
                 existing_task = todoist.items.get_by_id(existing_task_id)
+
+                if existing_task['checked']:
+                    logger.info("Re-opening task '{}'".format(issue.title))
+                    todoist.items.uncomplete([existing_task_id])
+
                 existing_task.update(
                     content=issue_to_task_name(issue),
                     priority=get_status_for_issue(issue)
