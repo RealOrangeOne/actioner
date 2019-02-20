@@ -4,11 +4,12 @@ from typing import Dict
 from github import Issue
 
 from actioner.clients import github, todoist
+from actioner.utils import get_todoist_project_from_repo
 
-REPOS = {
-    'srobo/tasks': 2190856871,
-    'srobo/core-team-minutes': 2190856871
-}
+REPOS = frozenset([
+   'srobo/tasks',
+   'srobo/core-team-minutes'
+])
 
 LABEL_TO_STATUS = {
     'must have': 4,
@@ -50,7 +51,8 @@ def todoist_assigned_issues():
     me = github.get_user()
     todoist.projects.sync()
     todoist.items.sync()
-    for repo_name, project_id in REPOS.items():
+    for repo_name in REPOS:
+        project_id = get_todoist_project_from_repo(repo_name)
         existing_tasks = {item['id']: item['content'] for item in todoist.state['items'] if item['project_id'] == project_id}
         repo = github.get_repo(repo_name)
         for issue in repo.get_issues(assignee=me.login, state='all'):

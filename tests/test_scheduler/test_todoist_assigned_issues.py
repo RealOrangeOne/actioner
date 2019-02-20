@@ -1,12 +1,12 @@
 from collections import namedtuple
 
-from actioner.clients import github, todoist
 from actioner.scheduler.todoist_assigned_issues import (
     REPOS,
     get_existing_task,
     get_issue_link,
     issue_to_task_name,
 )
+from actioner.utils import get_todoist_project_from_repo
 from tests import BaseTestCase
 
 FakeIssue = namedtuple('FakeIssue', ['number', 'html_url', 'title'])
@@ -29,15 +29,9 @@ class IssueTaskNameTestCase(BaseTestCase):
 
 
 class ConfigurationTestCase(BaseTestCase):
-    def test_repos_exist(self):
-        for repo in REPOS.keys():
-            github.get_repo(repo)
-
-    def test_projects_exist(self):
-        todoist.projects.sync()
-        project_ids = {project['id'] for project in todoist.state['projects']}
-        for project_id in REPOS.values():
-            self.assertIn(project_id, project_ids)
+    def test_repo_is_known(self):
+        for repo in REPOS:
+            self.assertIsNotNone(get_todoist_project_from_repo(repo))
 
 
 class ExistingTaskTestCase(BaseTestCase):
