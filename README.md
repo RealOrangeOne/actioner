@@ -9,3 +9,4 @@ Do things
 
 - Healthcheck endpoint
 - Add assigned issues from certain GitHub repos to Todoist
+- Add all unreviewed PRs for certain GitHub repos to Todoist

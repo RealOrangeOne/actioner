@@ -1,10 +1,10 @@
 import logging
-from typing import Dict
 
 from github import Issue
 
 from actioner.clients import github, todoist
 from actioner.utils import get_todoist_project_from_repo
+from actioner.utils.github import get_existing_task, get_issue_link
 
 REPOS = frozenset([
    'srobo/tasks',
@@ -28,23 +28,8 @@ def get_status_for_issue(issue: Issue) -> int:
     return max(priorities, default=1)
 
 
-def get_issue_link(issue: Issue) -> str:
-    return "[#{id}]({url})".format(
-        id=issue.number,
-        url=issue.html_url
-    )
-
-
 def issue_to_task_name(issue: Issue) -> str:
     return get_issue_link(issue) + ": " + issue.title
-
-
-def get_existing_task(tasks: Dict[int, str], issue: Issue):
-    issue_link = get_issue_link(issue)
-    for task_id, task_title in tasks.items():
-        if task_title.startswith(issue_link):
-            return task_id
-    return None
 
 
 def todoist_assigned_issues():
