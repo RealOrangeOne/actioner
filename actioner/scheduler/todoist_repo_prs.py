@@ -58,7 +58,7 @@ def todoist_repo_prs():
                     if my_review.commit_id == pr.head.sha and not existing_task['checked']:
                         logger.info("Completing task to review '{}'".format(pr.title))
                         todoist.items.complete([existing_task_id])
-                    elif existing_task['checked']:
+                    elif existing_task['checked'] and existing_task['checked']:
                         logger.info("Re-opening task to review '{}'".format(pr.title))
                         todoist.items.uncomplete([existing_task_id])
                 existing_task.update(
