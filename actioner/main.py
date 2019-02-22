@@ -3,6 +3,7 @@ from multiprocessing import Process
 
 import sentry_sdk
 from aiohttp.web import run_app as run_web_app
+from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
 from actioner.scheduler import create_scheduler, start_scheduler
 from actioner.settings import LOGGING_LEVEL, SENTRY_DSN
@@ -14,6 +15,7 @@ def main():
 
     sentry_sdk.init(
         dsn=SENTRY_DSN,
+        integrations=[AioHttpIntegration()]
     )
 
     server = get_server()
