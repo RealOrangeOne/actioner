@@ -9,8 +9,8 @@ from .todoist_repo_prs import todoist_repo_prs
 
 def create_scheduler():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(todoist_assigned_issues, 'interval', minutes=15)
-    scheduler.add_job(todoist_repo_prs, 'interval', minutes=15)
+    scheduler.add_job(todoist_assigned_issues, "interval", minutes=15)
+    scheduler.add_job(todoist_repo_prs, "interval", minutes=15)
 
     for job in scheduler.get_jobs():
         if isinstance(job.trigger, IntervalTrigger):

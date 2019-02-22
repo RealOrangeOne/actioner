@@ -5,6 +5,9 @@ set -e
 echo "> Running tests..."
 nose2 $@ -C --coverage actioner --verbose --coverage-report term --coverage-report html
 
+echo "> Running formatter..."
+black actioner/ tests/ --check
+
 echo "> Running isort"
 isort -rc -c actioner/ tests/
 

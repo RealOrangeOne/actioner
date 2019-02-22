@@ -3,3 +3,5 @@
 set -e
 
 isort -rc actioner/ tests/
+
+black actioner/ tests/

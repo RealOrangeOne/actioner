@@ -13,10 +13,7 @@ from actioner.web import get_server
 def main():
     logging.basicConfig(level=LOGGING_LEVEL)
 
-    sentry_sdk.init(
-        dsn=SENTRY_DSN,
-        integrations=[AioHttpIntegration()]
-    )
+    sentry_sdk.init(dsn=SENTRY_DSN, integrations=[AioHttpIntegration()])
 
     server = get_server()
     scheduler = create_scheduler()
@@ -26,5 +23,5 @@ def main():
     Process(target=start_scheduler, args=(scheduler,)).start()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
