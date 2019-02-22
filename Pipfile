@@ -14,7 +14,7 @@ flake8-print = "*"
 flake8-tuple = "*"
 
 [requires]
-python_version = "3.5"
+python_version = "3.7"
 
 [scripts]
 start = "python3 -m actioner"
