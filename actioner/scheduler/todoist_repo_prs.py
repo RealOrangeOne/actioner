@@ -9,7 +9,7 @@ from actioner.utils.github import get_existing_task, get_issue_link
 logger = logging.getLogger(__name__)
 
 
-REPOS = frozenset(["srobo/core-team-minutes"])
+REPOS = ["srobo/core-team-minutes"]
 
 
 def pr_to_task_name(pr: PullRequest) -> str:

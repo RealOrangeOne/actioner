@@ -6,7 +6,7 @@ from actioner.clients import github, todoist
 from actioner.utils import get_todoist_project_from_repo
 from actioner.utils.github import get_existing_task, get_issue_link
 
-REPOS = frozenset(["srobo/tasks", "srobo/core-team-minutes"])
+REPOS = ["srobo/tasks", "srobo/core-team-minutes"]
 
 LABEL_TO_STATUS = {"must have": 4, "critical": 4, "should have": 2}
 
