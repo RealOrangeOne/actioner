@@ -43,7 +43,6 @@ def todoist_assigned_issues():
             if existing_task_id and not me_assigned:
                 logger.info("Deleting task for '{}'".format(issue.title))
                 todoist.items.delete([existing_task_id])
-                continue
 
             elif (
                 issue.state == "closed"
@@ -52,9 +51,8 @@ def todoist_assigned_issues():
             ):
                 logger.info("Completing task for '{}'".format(issue.title))
                 todoist.items.complete([existing_task_id])
-                continue
 
-            if issue.state == "open":
+            elif issue.state == "open":
                 if existing_task_id is None:
                     logger.info("Creating task for '{}'".format(issue.title))
                     existing_task_id = todoist.items.add(
