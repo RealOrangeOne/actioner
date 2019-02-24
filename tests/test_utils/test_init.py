@@ -1,4 +1,4 @@
-from actioner.clients import github, todoist
+from actioner.clients import get_todoist_client, github
 from actioner.utils import (
     GH_ORG_TO_TODOIST,
     GH_REPO_TO_TODOIST,
@@ -28,6 +28,7 @@ class TodoistProjectToRepoTestCase(BaseTestCase):
             github.get_organization(org)
 
     def test_project_exists(self):
+        todoist = get_todoist_client()
         project_ids = set(GH_ORG_TO_TODOIST.values()).union(GH_REPO_TO_TODOIST.values())
         todoist.projects.sync()
         todoist_project_ids = {project["id"] for project in todoist.state["projects"]}

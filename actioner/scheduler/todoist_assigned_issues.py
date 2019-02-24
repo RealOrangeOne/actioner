@@ -2,9 +2,10 @@ import logging
 
 from github import Issue
 
-from actioner.clients import github, todoist
+from actioner.clients import get_todoist_client, github
 from actioner.utils import get_todoist_project_from_repo
 from actioner.utils.github import get_existing_task, get_issue_link
+from actioner.utils.todoist import is_task_completed
 
 REPOS = ["srobo/tasks", "srobo/core-team-minutes"]
 
@@ -23,6 +24,7 @@ def issue_to_task_name(issue: Issue) -> str:
 
 
 def todoist_assigned_issues():
+    todoist = get_todoist_client()
     me = github.get_user()
     todoist.projects.sync()
     todoist.items.sync()
@@ -46,7 +48,7 @@ def todoist_assigned_issues():
             elif (
                 issue.state == "closed"
                 and existing_task_id is not None
-                and not todoist.items.get_by_id(existing_task_id)["checked"]
+                and not is_task_completed(todoist.items.get_by_id(existing_task_id))
             ):
                 logger.info("Completing task for '{}'".format(issue.title))
                 todoist.items.complete([existing_task_id])
@@ -60,7 +62,7 @@ def todoist_assigned_issues():
                     )["id"]
                 existing_task = todoist.items.get_by_id(existing_task_id)
 
-                if existing_task["checked"]:
+                if is_task_completed(existing_task):
                     logger.info("Re-opening task '{}'".format(issue.title))
                     todoist.items.uncomplete([existing_task_id])
 

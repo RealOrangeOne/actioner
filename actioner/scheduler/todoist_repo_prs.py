@@ -2,9 +2,10 @@ import logging
 
 from github import PullRequest
 
-from actioner.clients import github, todoist
+from actioner.clients import get_todoist_client, github
 from actioner.utils import get_todoist_project_from_repo
 from actioner.utils.github import get_existing_task, get_issue_link
+from actioner.utils.todoist import is_task_completed
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +24,7 @@ def get_my_review(me, pr: PullRequest):
 
 
 def todoist_repo_prs():
+    todoist = get_todoist_client()
     me = github.get_user()
     todoist.projects.sync()
     todoist.items.sync()
@@ -39,7 +41,12 @@ def todoist_repo_prs():
 
             if pr.state == "closed" and existing_task_id:
                 my_review = get_my_review(me, pr)
-                if pr.merged and my_review and my_review.state == "APPROVED":
+                if (
+                    pr.merged
+                    and my_review
+                    and my_review.state == "APPROVED"
+                    and not is_task_completed(existing_task_id)
+                ):
                     logger.info("Completing task to review '{}'".format(pr.title))
                     todoist.items.complete([existing_task_id])
                 else:
@@ -56,13 +63,16 @@ def todoist_repo_prs():
                 existing_task = todoist.items.get_by_id(existing_task_id)
                 my_review = get_my_review(me, pr)
                 if existing_task_id and my_review:
-                    if (
-                        my_review.commit_id == pr.head.sha
-                        and not existing_task["checked"]
+                    if my_review.commit_id == pr.head.sha and not is_task_completed(
+                        existing_task
                     ):
-                        logger.info("Completing task to review '{}'".format(pr.title))
+                        logger.info(
+                            "Completing task to review '{}', because I already did it".format(
+                                pr.title
+                            )
+                        )
                         todoist.items.complete([existing_task_id])
-                    elif existing_task["checked"] and existing_task["checked"]:
+                    elif is_task_completed(existing_task):
                         logger.info("Re-opening task to review '{}'".format(pr.title))
                         todoist.items.uncomplete([existing_task_id])
                 existing_task.update(content=pr_to_task_name(pr))
