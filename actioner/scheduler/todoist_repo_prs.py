@@ -41,44 +41,45 @@ def todoist_repo_prs():
 
             if pr.state == "closed" and existing_task_id:
                 my_review = get_my_review(me, pr)
-                if (
-                    pr.merged
-                    and my_review
-                    and my_review.state == "APPROVED"
-                    and not is_task_completed(existing_task_id)
-                ):
-                    logger.info("Completing task to review '{}'".format(pr.title))
-                    todoist.items.complete([existing_task_id])
+                if pr.merged and my_review and my_review.state == "APPROVED":
+                    if not is_task_completed(todoist.items.get_by_id(existing_task_id)):
+                        logger.info("Completing task to review '{}'".format(pr.title))
+                        todoist.items.complete([existing_task_id])
                 else:
                     logger.info("Deleting task to review '{}'".format(pr.title))
                     todoist.items.delete([existing_task_id])
 
             elif pr.state == "open":
-                if existing_task_id is None:
+                my_review = get_my_review(me, pr)
+
+                if existing_task_id:
+                    existing_task = todoist.items.get_by_id(existing_task_id)
+                    task_completed = is_task_completed(existing_task)
+                    if my_review:
+                        if my_review.commit_id == pr.head.sha and not task_completed:
+                            logger.info(
+                                "Completing task to review '{}', because I already did it".format(
+                                    pr.title
+                                )
+                            )
+                            todoist.items.complete([existing_task_id])
+                        elif task_completed:
+                            logger.info(
+                                "Re-opening task to review '{}'".format(pr.title)
+                            )
+                            todoist.items.uncomplete([existing_task_id])
+                        continue
+                elif my_review and my_review.commit_id != pr.head.sha:
                     logger.info("Creating task to review '{}'".format(pr.title))
                     existing_task_id = todoist.items.add(
                         pr_to_task_name(pr), project_id
                     )["id"]
-
-                existing_task = todoist.items.get_by_id(existing_task_id)
-                my_review = get_my_review(me, pr)
-                if existing_task_id and my_review:
-                    if my_review.commit_id == pr.head.sha and not is_task_completed(
-                        existing_task
-                    ):
-                        logger.info(
-                            "Completing task to review '{}', because I already did it".format(
-                                pr.title
-                            )
+                if existing_task_id is not None:
+                    existing_task = todoist.items.get_by_id(existing_task_id)
+                    existing_task.update(content=pr_to_task_name(pr))
+                    if pr.milestone and pr.milestone.due_on:
+                        existing_task.update(
+                            date_string=pr.milestone.due_on.strftime("%d/%m/%Y")
                         )
-                        todoist.items.complete([existing_task_id])
-                    elif is_task_completed(existing_task):
-                        logger.info("Re-opening task to review '{}'".format(pr.title))
-                        todoist.items.uncomplete([existing_task_id])
-                existing_task.update(content=pr_to_task_name(pr))
-                if pr.milestone and pr.milestone.due_on:
-                    existing_task.update(
-                        date_string=pr.milestone.due_on.strftime("%d/%m/%Y")
-                    )
 
     todoist.commit()
