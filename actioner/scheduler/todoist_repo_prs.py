@@ -56,7 +56,6 @@ def todoist_repo_prs():
                     existing_task = todoist.items.get_by_id(existing_task_id)
                     task_completed = is_task_completed(existing_task)
                     if my_review:
-                        print(pr, my_review, my_review.commit_id, pr.head.sha)
                         if my_review.commit_id == pr.head.sha and not task_completed:
                             logger.info(
                                 "Completing task to review '{}', because I already did it".format(
