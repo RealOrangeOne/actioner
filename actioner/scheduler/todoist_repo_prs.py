@@ -10,7 +10,7 @@ from actioner.utils.todoist import is_task_completed
 logger = logging.getLogger(__name__)
 
 
-REPOS = ["srobo/core-team-minutes"]
+REPOS = ["srobo/competition-team-minutes"]
 
 
 def pr_to_task_name(pr: PullRequest) -> str:
