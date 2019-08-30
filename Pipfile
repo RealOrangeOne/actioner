@@ -13,6 +13,7 @@ flake8-mutable = "*"
 flake8-print = "*"
 flake8-tuple = "*"
 black = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.7"
@@ -32,3 +33,4 @@ pygithub = "*"
 aiohttp-basicauth = "*"
 todoist-python = "*"
 sentry-sdk = "*"
+python-dateutil = "*"

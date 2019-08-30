@@ -1,4 +1,9 @@
+import datetime
 from typing import Dict
+
+from dateutil.relativedelta import relativedelta
+
+from actioner.clients import github
 
 
 def get_issue_link(issue_or_pr) -> str:
@@ -11,3 +16,13 @@ def get_existing_task(tasks: Dict[int, str], issue_or_pr):
         if issue_link in task_title:
             return task_id
     return None
+
+
+def get_relevant_issues():
+    since = datetime.datetime.now() - relativedelta(weeks=1)
+    for repo in github.get_user().get_repos():
+        if repo.updated_at < since:
+            continue
+        for issue in repo.get_issues(since=since, state="all"):
+            if issue.pull_request is None:
+                yield issue
