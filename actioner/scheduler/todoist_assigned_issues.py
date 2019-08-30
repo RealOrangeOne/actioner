@@ -5,7 +5,7 @@ from github import Issue
 from actioner.clients import get_todoist_client, github
 from actioner.utils import get_todoist_project_from_repo
 from actioner.utils.github import get_existing_task, get_issue_link, get_relevant_issues
-from actioner.utils.todoist import is_task_completed
+from actioner.utils.todoist import get_existing_tasks, is_task_completed
 
 LABEL_TO_STATUS = {"must have": 4, "critical": 4, "should have": 2}
 
@@ -19,14 +19,6 @@ def get_status_for_issue(issue: Issue) -> int:
 
 def issue_to_task_name(issue: Issue) -> str:
     return get_issue_link(issue) + ": " + issue.title
-
-
-def get_existing_tasks(project_id, todoist):
-    return {
-        item["id"]: item["content"]
-        for item in todoist.state["items"]
-        if item["project_id"] == project_id
-    }
 
 
 def todoist_assigned_issues():

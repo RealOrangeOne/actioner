@@ -26,3 +26,14 @@ def get_relevant_issues():
         for issue in repo.get_issues(since=since, state="all"):
             if issue.pull_request is None:
                 yield issue
+
+
+def get_relevant_prs():
+    since = datetime.datetime.now() - relativedelta(weeks=1)
+    for repo in github.get_user().get_repos():
+        if repo.updated_at < since:
+            continue
+        for pull in repo.get_pulls(state="all", sort="updated", direction="desc"):
+            if pull.updated_at < since:
+                break
+            yield pull
