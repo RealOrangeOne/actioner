@@ -30,6 +30,8 @@ def todoist_repo_prs():
     todoist.items.sync()
     for repo_name in REPOS:
         project_id = get_todoist_project_from_repo(repo_name)
+        if not project_id:
+            continue
         existing_tasks = {
             item["id"]: item["content"]
             for item in todoist.state["items"]

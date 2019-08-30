@@ -36,6 +36,8 @@ def todoist_assigned_issues():
     todoist.items.sync()
     for issue in get_relevant_issues():
         project_id = get_todoist_project_from_repo(issue.repository.full_name)
+        if not project_id:
+            continue
         existing_tasks = get_existing_tasks(project_id, todoist)
         me_assigned = me.login in {assignee.login for assignee in issue.assignees}
         existing_task_id = get_existing_task(existing_tasks, issue)
