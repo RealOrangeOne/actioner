@@ -1,6 +1,6 @@
 import asyncio
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.executors.pool import ProcessPoolExecutor
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
@@ -9,7 +9,7 @@ from .todoist_repo_prs import todoist_repo_prs
 
 
 def create_scheduler():
-    scheduler = BlockingScheduler()
+    scheduler = BlockingScheduler(executors={"default": ProcessPoolExecutor()})
     scheduler.add_job(todoist_assigned_issues, "interval", minutes=15)
     scheduler.add_job(todoist_repo_prs, "interval", minutes=15)
 
