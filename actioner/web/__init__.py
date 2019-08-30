@@ -4,8 +4,7 @@ import uvicorn
 from starlette.applications import Starlette
 from starlette.authentication import SimpleUser, requires  # or a custom user model
 from starlette.middleware.authentication import AuthenticationMiddleware
-from starlette.responses import PlainTextResponse
-from starlette.routing import Route, Router
+from starlette.routing import Route
 from starlette_auth_toolkit.base.backends import BaseBasicAuth
 
 from actioner.settings import BASIC_AUTH
@@ -15,7 +14,6 @@ from .healthcheck import healthcheck
 
 class BasicAuth(BaseBasicAuth):
     async def verify(self, username: str, password: str):
-        print(username, password)
         if [username, password] != BASIC_AUTH:
             return None
         return SimpleUser(username)

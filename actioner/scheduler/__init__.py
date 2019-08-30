@@ -1,5 +1,3 @@
-import asyncio
-
 from apscheduler.executors.pool import ProcessPoolExecutor
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
