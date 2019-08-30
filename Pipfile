@@ -27,10 +27,11 @@ test = "bash ./scripts/test.sh"
 allow_prereleases = true
 
 [packages]
-aiohttp = "*"
 apscheduler = "*"
 pygithub = "*"
-aiohttp-basicauth = "*"
 todoist-python = "*"
 sentry-sdk = "*"
 python-dateutil = "*"
+starlette = "*"
+uvicorn = "*"
+starlette-auth-toolkit = "*"
