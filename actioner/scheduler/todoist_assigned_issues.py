@@ -44,6 +44,9 @@ def todoist_assigned_issues():
             logger.info("Deleting task for '{}'".format(issue.title))
             todoist.items.delete([existing_task_id])
 
+        if not me_assigned:
+            continue
+
         elif (
             issue.state == "closed"
             and existing_task_id is not None
