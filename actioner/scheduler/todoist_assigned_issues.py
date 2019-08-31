@@ -36,7 +36,7 @@ def todoist_assigned_issues():
 
         if existing_task_id and not me_assigned:
             logger.info("Deleting task for '{}'".format(issue.title))
-            todoist.items.delete([existing_task_id])
+            todoist.items.delete(existing_task_id)
 
         if not me_assigned:
             continue
@@ -59,7 +59,7 @@ def todoist_assigned_issues():
 
             if is_task_completed(existing_task):
                 logger.info("Re-opening task '{}'".format(issue.title))
-                todoist.items.uncomplete([existing_task_id])
+                todoist.items.uncomplete(existing_task_id)
 
             existing_task.update(
                 content=issue_to_task_name(issue), priority=get_status_for_issue(issue)

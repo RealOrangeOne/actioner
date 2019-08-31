@@ -37,10 +37,10 @@ def todoist_repo_prs():
             if pr.merged and my_review and my_review.state == "APPROVED":
                 if not is_task_completed(todoist.items.get_by_id(existing_task_id)):
                     logger.info("Completing task to review '{}'".format(pr.title))
-                    todoist.items.complete([existing_task_id])
+                    todoist.items.complete(existing_task_id)
             else:
                 logger.info("Deleting task to review '{}'".format(pr.title))
-                todoist.items.delete([existing_task_id])
+                todoist.items.delete(existing_task_id)
 
         elif pr.state == "open":
             my_review = get_my_review(me, pr)
@@ -58,7 +58,7 @@ def todoist_repo_prs():
                         todoist.items.complete([existing_task_id])
                     elif task_completed:
                         logger.info("Re-opening task to review '{}'".format(pr.title))
-                        todoist.items.uncomplete([existing_task_id])
+                        todoist.items.uncomplete(existing_task_id)
                     continue
             elif my_review and my_review.commit_id != pr.head.sha:
                 logger.info("Creating task to review '{}'".format(pr.title))
