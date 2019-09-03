@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "639b6ee8ba2e4692915576c1f76904dae0a808f4ab60f578646ccab8c23acfdd"
+            "sha256": "0e4b536511730008f5acfed1fc87a219976efc3ff233583edb362befe854f00e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -63,7 +63,6 @@
             "hashes": [
                 "sha256:e00cbd7ba01ff748e494248183abc6e153f49181169d8a3d41bb49132ca01dfc"
             ],
-            "markers": "sys_platform != 'win32' and sys_platform != 'cygwin' and platform_python_implementation != 'pypy'",
             "version": "==0.0.13"
         },
         "idna": {
@@ -126,10 +125,10 @@
         },
         "starlette": {
             "hashes": [
-                "sha256:f600bf9d0beeeeebcb143e6d0c4f8858c2b05067d5a4feb446ba7400ba5e5dc5"
+                "sha256:c2ac9a42e0e0328ad20fe444115ac5e3760c1ee2ac1ff8cdb5ec915c4a453411"
             ],
             "index": "pypi",
-            "version": "==0.12.8"
+            "version": "==0.12.9"
         },
         "starlette-auth-toolkit": {
             "hashes": [
@@ -180,7 +179,6 @@
                 "sha256:c48692bf4587ce281d641087658eca275a5ad3b63c78297bbded96570ae9ce8f",
                 "sha256:fefc3b2b947c99737c348887db2c32e539160dcbeb7af9aa6b53db7a283538fe"
             ],
-            "markers": "sys_platform != 'win32' and sys_platform != 'cygwin' and platform_python_implementation != 'pypy'",
             "version": "==0.12.2"
         },
         "websockets": {
