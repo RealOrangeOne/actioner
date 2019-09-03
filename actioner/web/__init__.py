@@ -1,6 +1,7 @@
 import os
 
 import uvicorn
+from sentry_asgi import SentryMiddleware
 from starlette.applications import Starlette
 from starlette.authentication import SimpleUser, requires  # or a custom user model
 from starlette.middleware.authentication import AuthenticationMiddleware
@@ -29,6 +30,7 @@ def get_server():
         ]
     )
     app.add_middleware(AuthenticationMiddleware, backend=BasicAuth())
+    app.add_middleware(SentryMiddleware)
 
     return app
 
