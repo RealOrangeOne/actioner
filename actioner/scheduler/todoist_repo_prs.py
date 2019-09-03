@@ -55,7 +55,7 @@ def todoist_repo_prs():
                                 pr.title
                             )
                         )
-                        todoist.items.complete([existing_task_id])
+                        todoist.items.complete(existing_task_id)
                     elif task_completed:
                         logger.info("Re-opening task to review '{}'".format(pr.title))
                         todoist.items.uncomplete(existing_task_id)
