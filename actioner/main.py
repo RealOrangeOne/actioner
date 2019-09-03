@@ -4,7 +4,6 @@ from multiprocessing import Process
 
 import sentry_sdk
 from apscheduler.util import get_callable_name
-from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
 from actioner.scheduler import create_scheduler
 from actioner.settings import LOGGING_LEVEL, SENTRY_DSN
@@ -22,7 +21,7 @@ def parse_args():
 def main():
     logging.basicConfig(level=LOGGING_LEVEL)
 
-    sentry_sdk.init(dsn=SENTRY_DSN, integrations=[AioHttpIntegration()])
+    sentry_sdk.init(dsn=SENTRY_DSN)
 
     args = parse_args()
 
