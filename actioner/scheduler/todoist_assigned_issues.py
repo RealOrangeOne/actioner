@@ -59,6 +59,7 @@ def todoist_assigned_issues():
 
             if is_task_completed(existing_task):
                 logger.info("Re-opening task '{}'".format(issue.title))
+                todoist.items.unarchive(existing_task_id)
                 todoist.items.uncomplete(existing_task_id)
 
             existing_task.update(
