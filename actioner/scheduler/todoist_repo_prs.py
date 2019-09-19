@@ -56,7 +56,7 @@ def todoist_repo_prs():
                             )
                         )
                         todoist.items.complete(existing_task_id)
-                    elif my_review.commit_id != pr.head.sha:
+                    elif my_review.commit_id != pr.head.sha and task_completed:
                         logger.info("Re-opening task to review '{}'".format(pr.title))
                         todoist.items.unarchive(existing_task_id)
                         todoist.items.uncomplete(existing_task_id)
