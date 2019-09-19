@@ -2,6 +2,7 @@ import argparse
 import logging
 from multiprocessing import Process
 
+import click
 import sentry_sdk
 from apscheduler.util import get_callable_name
 
@@ -12,20 +13,16 @@ from actioner.web import get_server, run_server
 logger = logging.getLogger(__name__)
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--once", action="store_true")
-    return parser.parse_args()
-
-
-def main():
+@click.group()
+def cli():
     logging.basicConfig(level=LOGGING_LEVEL)
-
     sentry_sdk.init(dsn=SENTRY_DSN)
 
-    args = parse_args()
 
-    if args.once:
+@cli.command()
+@click.option('--once', is_flag=True)
+def start(once):
+    if once:
         scheduler = create_scheduler()
         jobs = {job.func for job in scheduler.get_jobs()}
         for job in jobs:
@@ -37,4 +34,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    cli()

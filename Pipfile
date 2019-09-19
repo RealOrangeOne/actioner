@@ -19,7 +19,8 @@ ipython = "*"
 python_version = "3.7"
 
 [scripts]
-start = "python3 -m actioner"
+start = "python3 -m actioner start"
+actioner = "python3 -m actioner"
 test-fix = "bash ./scripts/test-fix.sh"
 test = "bash ./scripts/test.sh"
 
@@ -36,3 +37,4 @@ starlette = "*"
 uvicorn = "*"
 starlette-auth-toolkit = "*"
 sentry-asgi = "*"
+click = "*"
