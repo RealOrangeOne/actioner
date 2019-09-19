@@ -5,6 +5,7 @@ import click
 import sentry_sdk
 from apscheduler.util import get_callable_name
 
+from actioner.cli import CLI_ENTRYPOINTS
 from actioner.scheduler import create_scheduler
 from actioner.settings import LOGGING_LEVEL, SENTRY_DSN
 from actioner.web import get_server, run_server
@@ -31,6 +32,10 @@ def once():
     for job in jobs:
         logger.info("Executing '{}'".format(get_callable_name(job)))
         job()
+
+
+for entry_point in CLI_ENTRYPOINTS:
+    cli.command()(entry_point)
 
 
 if __name__ == "__main__":
