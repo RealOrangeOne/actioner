@@ -1,4 +1,3 @@
-import argparse
 import logging
 from multiprocessing import Process
 
@@ -20,17 +19,18 @@ def cli():
 
 
 @cli.command()
-@click.option('--once', is_flag=True)
-def start(once):
-    if once:
-        scheduler = create_scheduler()
-        jobs = {job.func for job in scheduler.get_jobs()}
-        for job in jobs:
-            logger.info("Executing '{}'".format(get_callable_name(job)))
-            job()
-    else:
-        Process(target=run_server, args=(get_server(),)).start()
-        Process(target=create_scheduler().start).start()
+def start():
+    Process(target=run_server, args=(get_server(),)).start()
+    Process(target=create_scheduler().start).start()
+
+
+@cli.command()
+def once():
+    scheduler = create_scheduler()
+    jobs = {job.func for job in scheduler.get_jobs()}
+    for job in jobs:
+        logger.info("Executing '{}'".format(get_callable_name(job)))
+        job()
 
 
 if __name__ == "__main__":
