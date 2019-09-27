@@ -47,7 +47,7 @@ def todoist_assigned_issues():
             and not is_task_completed(todoist.items.get_by_id(existing_task_id))
         ):
             logger.info("Completing task for '{}'".format(issue.title))
-            todoist.items.complete([existing_task_id])
+            todoist.items.complete(existing_task_id)
 
         elif issue.state == "open":
             if existing_task_id is None:
