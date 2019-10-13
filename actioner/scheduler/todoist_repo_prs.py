@@ -20,6 +20,14 @@ def get_my_review(me, pr: PullRequest):
             return review
 
 
+def get_my_review_requested(me, pr: PullRequest) -> bool:
+    reviewing_users, _ = pr.get_review_requests()
+    for user in reviewing_users:
+        if user.login == me.login:
+            return True
+    return False
+
+
 def todoist_repo_prs():
     todoist = get_todoist_client()
     me = github.get_user()
@@ -64,7 +72,11 @@ def todoist_repo_prs():
                         todoist.items.unarchive(existing_task_id)
                         todoist.items.uncomplete(existing_task_id)
                     continue
-            elif my_review and my_review.commit_id != pr.head.sha:
+            elif (
+                get_my_review_requested(me, pr)
+                and my_review
+                and my_review.commit_id != pr.head.sha
+            ):
                 logger.info("Creating task to review '{}'".format(pr.title))
                 existing_task_id = todoist.items.add(
                     pr_to_task_name(pr), project_id=project_id
