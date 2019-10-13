@@ -32,6 +32,9 @@ def todoist_repo_prs():
         existing_tasks = get_existing_tasks(project_id, todoist)
         existing_task_id = get_existing_task(existing_tasks, pr)
 
+        if pr.user.login == me.login:
+            continue  # I don't need to review my own PRs!
+
         if pr.state == "closed" and existing_task_id:
             my_review = get_my_review(me, pr)
             if pr.merged and my_review and my_review.state == "APPROVED":
